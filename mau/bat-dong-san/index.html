@@ -1,0 +1,632 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta property="og:title" content="Bảng điều khiển ngành Bất động sản · Bệnh viện Doanh nghiệp"><meta property="og:type" content="website"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B3D66'/%3E%3Crect y='27' width='32' height='5' rx='2' fill='%23C99A2E'/%3E%3Cpath d='M16 7v16M8 15h16' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Bảng điều khiển ngành Bất động sản</title>
+<meta name="description" content="Bản mẫu dựng từ gói dữ liệu ngành Bất động sản: 79 doanh nghiệp niêm yết 2020–2025. Nhập 5 số của công ty bạn để xem vị trí trong ngành, thang chuẩn P10–P90, xếp hạng, xu hướng và kịch bản quỹ lương.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
+<style>
+/* Bảng điều khiển ngành: cùng nhận diện với trang Số liệu niêm yết (xanh đậm, vàng, nền giấy sáng); một trang cuộn dọc,
+   mở đầu bằng công cụ "công ty bạn ở đâu", rồi thang chuẩn, xu hướng, xếp hạng, kịch bản quỹ lương, tình huống dùng, gói. */
+:root{
+  --bg:#F5F8FB; --surface:#FFFFFF; --surface-2:#EEF3F9; --ink:#0F2438; --ink-2:#44586E; --ink-3:#6B7F95;
+  --line:#DCE4EE; --line-2:#B8C7D8; --accent:#0B3D66; --accent-deep:#082C4B; --accent-soft:#E4ECF5;
+  --gold:#C99A2E; --gold-soft:#F7EEDA; --gold-ink:#8A6512;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#c98500; --s5:#d55181;
+  --f-body:"Be Vietnam Pro","Segoe UI",Roboto,Arial,sans-serif; --f-head:"Plus Jakarta Sans","Be Vietnam Pro","Segoe UI",Arial,sans-serif;
+  --shadow:0 1px 2px rgba(15,36,56,.06),0 8px 24px rgba(15,36,56,.07); --r:14px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-head);font-weight:700;line-height:1.18;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0 0 12px}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.muted{color:var(--ink-3)}.small{font-size:14px}.tiny{font-size:12.5px}
+.eyebrow{font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--gold-ink);font-weight:700}
+.num{font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(245,248,251,.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);min-width:0}
+.mark{width:34px;height:34px;border-radius:9px;background:var(--accent);display:grid;place-items:center;flex:none;box-shadow:inset 0 -3px 0 var(--gold)}
+.brand b{font-family:var(--f-head);font-size:16.5px;display:block;line-height:1.15;white-space:nowrap}
+.brand small{display:block;font-size:12px;color:var(--gold-ink);font-weight:600;white-space:nowrap}
+.top nav{margin-left:auto;display:flex;gap:2px;align-items:center;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.top nav::-webkit-scrollbar{display:none}
+.top nav a{font-size:14px;color:var(--ink-2);text-decoration:none;padding:8px 10px;border-radius:8px;white-space:nowrap}
+.top nav a:hover{background:var(--surface-2)}
+@media (max-width:900px){.top nav a.an{display:none}}
+@media (max-width:560px){.brand small{display:none}.brand b{font-size:15px}.top nav a:not(.btn){display:none}.top nav .btn.sm{padding:7px 10px;font-size:13px}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 15px/1.2 var(--f-body);padding:12px 18px;border-radius:11px;border:1px solid transparent;cursor:pointer;text-decoration:none;transition:background .15s,border-color .15s}
+.btn.p{background:var(--accent);color:#fff}.btn.p:hover{background:var(--accent-deep)}
+.btn.v{background:var(--gold);color:#241700}.btn.v:hover{background:#b98b25}
+.btn.g{background:var(--surface);color:var(--accent);border-color:var(--line-2)}.btn.g:hover{border-color:var(--accent)}
+.btn.sm{font-size:13.5px;padding:8px 12px;border-radius:9px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.chip.vang{background:var(--gold-soft);color:var(--gold-ink)}
+.chip.xam{background:var(--surface-2);color:var(--ink-2)}
+.hang{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.sec{padding-block:34px 6px}
+.sec .dau{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.sec .dau h2{font-size:clamp(21px,2.8vw,26px)}
+.sec .dau p{margin:4px 0 0;color:var(--ink-2);font-size:14.5px;max-width:70ch}
+.note{border-radius:12px;padding:12px 14px;background:var(--surface-2);font-size:14.5px;color:var(--ink-2)}
+.note.vang{background:var(--gold-soft);color:#5c3d0a}
+.cuon{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+.hero{padding-block:clamp(26px,5vw,52px) 6px}
+.hero h1{font-size:clamp(28px,4.6vw,44px);max-width:22ch}
+.hero .lede{font-size:clamp(16px,2vw,18.5px);color:var(--ink-2);max-width:66ch;margin-top:14px}
+.dai-so{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:22px}
+.dai-so div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.dai-so b{font-family:var(--f-head);font-size:24px;display:block;line-height:1.1;color:var(--accent)}
+.dai-so span{font-size:13px;color:var(--ink-3)}
+
+/* bộ chọn */
+select,input[type=number],input[type=text],input[type=email],textarea{font:500 15px var(--f-body);color:var(--ink);background:var(--surface);border:1.5px solid var(--line-2);border-radius:10px;padding:9px 12px;min-width:0;max-width:100%}
+select:focus,input:focus,textarea:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+label.o{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--ink-2);font-weight:600;min-width:0}
+label.o input,label.o select{width:100%}
+.o small{font-weight:400;color:var(--ink-3)}
+.bo-chon{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.pham-vi{display:flex;gap:10px;flex-wrap:wrap;align-items:end;padding:12px 14px;border-radius:12px;background:var(--accent-soft);margin-bottom:16px}
+.pham-vi label.o{min-width:150px;flex:1 1 150px}
+.pham-vi .ghi{flex:1 1 100%;font-size:13px;color:var(--ink-2)}
+
+/* vị trí: thẻ chỉ số */
+.luoi-vt{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-top:16px}
+@media (min-width:1000px){.luoi-vt{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.vt{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.vt .ten{font-size:13.5px;color:var(--ink-2);font-weight:600;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.vt .ten .nhan{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.nhan.thap{background:#E6F2FB;color:#1b5a8a}.nhan.giua{background:var(--surface-2);color:var(--ink-2)}.nhan.cao{background:var(--gold-soft);color:var(--gold-ink)}.nhan.trong{background:var(--surface-2);color:var(--ink-3)}
+.vt .gt{font-family:var(--f-head);font-size:26px;line-height:1.1;color:var(--ink)}
+.vt .gt small{font-family:var(--f-body);font-size:12.5px;color:var(--ink-3);font-weight:500;margin-left:4px}
+.vt .doc{font-size:13.5px;color:var(--ink-2);min-height:1.5em}
+.thanh{width:100%;height:44px;display:block}
+#bangKh td:first-child,#bangKh th:first-child{min-width:170px;white-space:normal;text-align:left}
+#bangKh th{white-space:normal;line-height:1.3}
+#bangKh td.num{font-size:15px}
+#bangSs tfoot td{white-space:normal;font-size:12.5px;color:var(--ink-3);text-align:left}
+.doc-nhanh{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-top:14px}
+@media (max-width:760px){.doc-nhanh{grid-template-columns:1fr}}
+.doc-nhanh .card h3{font-size:16.5px;margin-bottom:8px}
+.doc-nhanh ul{margin:0;padding-left:18px;font-size:15px}
+.doc-nhanh li{margin-bottom:6px}
+textarea.memo{width:100%;min-height:150px;font-size:14px;line-height:1.55;resize:vertical}
+
+/* bảng */
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;vertical-align:middle}
+th{font-size:12.5px;color:var(--ink-3);font-weight:600;letter-spacing:.02em;background:var(--surface);position:sticky;top:0;z-index:1}
+th:first-child,td:first-child{text-align:left}
+td.ten{text-align:left;white-space:normal;min-width:200px;max-width:360px}
+tr.tv td{font-weight:700;background:var(--gold-soft)}
+tr.chon td{background:var(--accent-soft)}
+th.sap{cursor:pointer;user-select:none;color:var(--accent)}
+th.sap:hover{text-decoration:underline}
+.bang-cuon{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.bang-cuon table{font-size:13.5px}
+.bang-cuon th:first-child,.bang-cuon td:first-child{position:sticky;left:0;background:var(--surface);z-index:2}
+.bang-cuon th:first-child{z-index:3}
+td .pv{display:inline-block;width:54px;height:6px;border-radius:3px;background:var(--surface-2);vertical-align:middle;margin-right:6px;position:relative;overflow:hidden}
+td .pv i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);opacity:.7}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent)}
+
+/* biểu đồ */
+.bd{width:100%;height:auto;display:block}
+.chon-cs{display:flex;gap:6px;flex-wrap:wrap}
+.chon-cs button{font:600 13px var(--f-body);padding:7px 11px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.chon-cs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.chu-giai{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:6px}
+.chu-giai i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:#fff;font-size:12.5px;line-height:1.45;padding:8px 10px;border-radius:9px;box-shadow:var(--shadow);max-width:260px}
+.tip b{color:#fff}
+
+/* so sánh */
+.ss-chon{display:flex;gap:8px;flex-wrap:wrap;min-height:34px;align-items:center}
+.ss-chon .chip button{all:unset;cursor:pointer;font-weight:700;margin-left:2px;line-height:1}
+.mau1{color:var(--s1)}.mau2{color:var(--s2)}.mau3{color:var(--s3)}.mau4{color:var(--s4)}.mau5{color:var(--s5)}
+
+/* quỹ lương */
+.kb{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.kb{grid-template-columns:1fr}}
+.kb .card h3{font-size:16.5px;margin-bottom:10px}
+.kq-dong{display:flex;flex-direction:column;gap:3px}
+
+/* cổng mở trang */
+.cong{border-top:5px solid var(--gold);padding:24px}
+.cong-dau h2{font-size:clamp(19px,2.4vw,23px);margin:4px 0 6px}
+.cong-dau p{color:var(--ink-2);font-size:14.5px;max-width:70ch;margin:0 0 14px}
+.xac-nhan{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink);margin-top:12px;font-weight:400}
+.xac-nhan input{margin-top:4px;flex:none}
+.xac-nhan.nhe{color:var(--ink-2)}
+.cg-web{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.cong form{position:relative}
+#cgBao.loi{color:#9b2c2c;font-weight:600}
+#cgBao.ok{color:#1b7a4e;font-weight:600}
+.kin{position:relative;max-height:640px;overflow:hidden;-webkit-mask-image:linear-gradient(#000 35%,transparent 96%);mask-image:linear-gradient(#000 35%,transparent 96%)}
+.kin>section{filter:blur(6px);pointer-events:none;user-select:none}
+.kin::after{content:"";position:absolute;inset:0}
+#heroKhoa:empty{display:none}
+
+/* tình huống */
+.th-luoi{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.th{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:8px}
+.th .ai{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-ink);font-weight:700}
+.th h3{font-size:17px}
+.th p{font-size:14.5px;color:var(--ink-2);margin:0}
+.th .vd{font-size:13.5px;background:var(--surface-2);border-radius:10px;padding:10px 12px;color:var(--ink)}
+.th .vd b{color:var(--accent)}
+.th a{font-size:13.5px;font-weight:600}
+
+/* gói */
+.goi{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+@media (max-width:860px){.goi{grid-template-columns:1fr}}
+.goi ul{margin:0;padding-left:18px;font-size:14.5px}
+.goi li{margin-bottom:5px}
+.nganh-khac{display:flex;flex-wrap:wrap;gap:6px}
+.lien-he{display:flex;flex-direction:column;gap:10px}
+.lien-he .dong{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:space-between;background:var(--surface-2);border-radius:10px;padding:10px 12px}
+.lien-he code{font:600 15px var(--f-body);color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;transition:.2s;z-index:60;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+footer.ft{padding-block:30px 40px;color:var(--ink-3);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
+footer.ft p{max-width:none}
+</style>
+</head><body>
+
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#"><span class="mark"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v14M3 10h14" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/></svg></span><span><b>Bệnh viện Doanh nghiệp</b><small>Gói ngành Bất động sản · bản mẫu</small></span></a>
+  <nav>
+    <a href="#vi-tri">Vị trí</a><a href="#thang-chuan" class="an">Thang chuẩn</a><a href="#xu-huong" class="an">Xu hướng</a><a href="#xep-hang">Xếp hạng</a><a href="#quy-luong" class="an">Quỹ lương</a><a href="#dung-vao-viec" class="an">Dùng vào việc</a><a href="#goi" class="btn p sm">Gói dữ liệu</a>
+  </nav>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+  <div class="eyebrow">Dựng từ một tệp Excel trong bộ 20 gói · ngành Bất động sản</div>
+  <h1>Công ty bạn chi cho người bao nhiêu so với 79 doanh nghiệp bất động sản niêm yết?</h1>
+  <p class="lede">Mọi con số dưới đây lấy từ sheet <b>DOANH_NGHIEP</b> của tệp <code>01_Chuan-nganh_bat-dong-san.xlsx</code>: 79 doanh nghiệp, 2020–2025, đọc từ báo cáo tài chính năm đã kiểm toán. Nhập 5 số của công ty bạn để xem vị trí; cuộn xuống để xem thang chuẩn, xếp hạng, xu hướng và kịch bản quỹ lương năm tới.</p>
+  <p class="small muted" id="heroKhoa" style="margin-top:6px">Mục 1 mở tự do. Năm mục còn lại mở sau khi bạn để lại thông tin liên hệ, miễn phí.</p>
+  <div class="dai-so" id="daiSo"></div>
+</div></section>
+
+<section class="sec" id="vi-tri"><div class="wrap">
+  <div class="dau"><div><div class="eyebrow">1 · Công ty bạn ở đâu</div><h2>Nhập 5 số, xem ngay vị trí trong ngành</h2><p>Năm số lấy từ báo cáo tài chính năm gần nhất của công ty bạn. Số mẫu điền sẵn là một công ty giả định cỡ trung bình ngành, thay bằng số của bạn.</p></div></div>
+  <div class="pham-vi" id="phamVi">
+    <label class="o">Năm so sánh<select id="pvNam"></select></label>
+    <label class="o">Nhóm so sánh<select id="pvQm"><option value="all">Cả ngành</option><option value="tu">Cùng quy mô doanh thu với công ty bạn</option><option value="0">Dưới 500 tỷ</option><option value="1">500–2.000 tỷ</option><option value="2">2.000–10.000 tỷ</option><option value="3">Trên 10.000 tỷ</option></select></label>
+    <div class="ghi" id="pvGhi"></div>
+  </div>
+  <div class="card">
+    <div class="bo-chon">
+      <label class="o">Doanh thu thuần <small>tỷ đồng · mã 10</small><input type="number" id="inDt" min="0" step="any" value="1200"></label>
+      <label class="o">Chi phí nhân công theo yếu tố <small>tỷ đồng · thuyết minh chi phí theo yếu tố</small><input type="number" id="inCp" min="0" step="any" value="118"></label>
+      <label class="o">Tổng chi phí hoạt động <small>tỷ đồng · giá vốn + bán hàng + quản lý</small><input type="number" id="inTcp" min="0" step="any" value="1030"></label>
+      <label class="o">Lợi nhuận trước thuế <small>tỷ đồng · mã 50</small><input type="number" id="inLntt" min="0" step="any" value="190"></label>
+      <label class="o">Lao động bình quân <small>người</small><input type="number" id="inLd" min="1" step="1" value="470"></label>
+    </div>
+  </div>
+  <div class="luoi-vt" id="luoiVt"></div>
+  <div class="doc-nhanh">
+    <div class="card"><h3>Đọc nhanh</h3><ul id="docNhanh"></ul><p class="tiny muted" style="margin:8px 0 0">Vị trí tính theo số doanh nghiệp trong nhóm có giá trị thấp hơn hoặc bằng số của bạn. Thu nhập bình quân là chi phí doanh nghiệp bỏ ra trên mỗi người, gồm cả bảo hiểm và thưởng hạch toán vào chi phí, không phải lương thực nhận.</p></div>
+    <div class="card"><h3>Đoạn viết sẵn cho tờ trình</h3><textarea class="memo" id="memo" readonly></textarea><div class="hang" style="margin-top:10px"><button class="btn g sm" id="nutChep">Sao chép đoạn này</button><span class="tiny muted">Số và nguồn dẫn đúng theo tệp dữ liệu.</span></div></div>
+  </div>
+</div></section>
+
+<section class="sec" id="mo-khoa"><div class="wrap">
+  <div class="card cong">
+    <div class="cong-dau"><div><div class="eyebrow">Mở toàn bộ trang</div><h2>Để lại thông tin, xem tiếp thang chuẩn, xếp hạng, xu hướng và quỹ lương</h2><p>Miễn phí. Bệnh viện Doanh nghiệp dùng thông tin này để gửi bản xem mẫu khi bạn cần và trao đổi về gói dữ liệu; không chia sẻ cho bên thứ ba.</p></div></div>
+    <form id="fCong" novalidate>
+      <div class="bo-chon">
+        <label class="o">Họ tên <small>bắt buộc</small><input type="text" id="cgTen" name="ten" autocomplete="name" required maxlength="80"></label>
+        <label class="o">Doanh nghiệp, tổ chức <small>bắt buộc</small><input type="text" id="cgDn" name="dn" autocomplete="organization" required maxlength="120"></label>
+        <label class="o">Vai trò<select id="cgVai" name="vai"><option>Nhân sự, C&amp;B</option><option>Giám đốc, chủ doanh nghiệp</option><option>Tài chính, kế toán</option><option>Tư vấn nhân sự</option><option>Phân tích, đầu tư</option><option>Giảng viên, sinh viên</option><option>Khác</option></select></label>
+        <label class="o">Thư điện tử <small>bắt buộc</small><input type="email" id="cgEmail" name="email" autocomplete="email" required maxlength="120" inputmode="email"></label>
+        <label class="o">Zalo hoặc điện thoại <small>tuỳ chọn</small><input type="text" id="cgDt" name="dt" autocomplete="tel" maxlength="30" inputmode="tel"></label>
+        <label class="o">Ngành bạn quan tâm<select id="cgNganh" name="nganh"><option>Bất động sản</option><option>Bán lẻ</option><option>Công nghệ thông tin, viễn thông</option><option>Dầu khí</option><option>Điện, nước, khí đốt</option><option>Du lịch và giải trí</option><option>Hàng cá nhân và gia dụng</option><option>Hàng và dịch vụ công nghiệp</option><option>Hoá chất</option><option>Ô tô và phụ tùng</option><option>Tài nguyên cơ bản</option><option>Thực phẩm và đồ uống</option><option>Truyền thông</option><option>Xây dựng và vật liệu</option><option>Y tế</option><option>Ngân hàng, chứng khoán, bảo hiểm</option><option>Bộ dữ liệu đầy đủ 705 doanh nghiệp</option></select></label>
+      </div>
+      <label class="o" style="margin-top:12px">Bạn định dùng số liệu vào việc gì? <small>tuỳ chọn, giúp chúng tôi gửi đúng bản mẫu</small><input type="text" id="cgNhuCau" name="nhu_cau" maxlength="200" placeholder="Ví dụ: lập ngân sách lương 2027, so với đối thủ, bài giảng"></label>
+      <div class="cg-web"><label>Website<input type="text" id="cgWeb" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <label class="xac-nhan"><input type="checkbox" id="cgDongY" required><span>Tôi đồng ý để Bệnh viện Doanh nghiệp lưu thông tin liên hệ này trong sổ nhận để gửi bản xem mẫu và trao đổi về gói dữ liệu, theo <a href="https://daohaianh85.github.io/kham/#/chinh-sach" target="_blank" rel="noopener">chính sách bảo mật</a>. <small class="muted">Bắt buộc.</small></span></label>
+      <label class="xac-nhan nhe"><input type="checkbox" id="cgTiepThi"><span>Nhận thư khi có bản cập nhật số liệu hoặc gói ngành mới. <small class="muted">Không bắt buộc, có thể dừng bất kỳ lúc nào.</small></span></label>
+      <div class="hang" style="margin-top:14px"><button type="submit" class="btn v" id="cgGui">Mở toàn bộ trang</button><span class="small" id="cgBao" role="status" aria-live="polite"></span></div>
+    </form>
+  </div>
+</div></section>
+
+<div id="khoaKin" class="kin">
+<section class="sec" id="thang-chuan"><div class="wrap">
+  <div class="dau"><div><div class="eyebrow">2 · Thang chuẩn ngành</div><h2>Phân vị P10–P90 của 7 chỉ số</h2><p>Theo năm và nhóm đã chọn ở trên. Trung vị là mức chuẩn; nửa số doanh nghiệp nằm giữa P25 và P75. Nhóm dưới 5 doanh nghiệp để trống.</p></div><span class="chip vang" id="tcNhan"></span></div>
+  <div class="card cuon" style="padding:0"><table id="bangTc"></table></div>
+  <div class="dau" style="margin-top:22px"><div><h3 style="font-size:18px">Trung vị theo quy mô doanh thu</h3><p>Cùng năm đã chọn. Doanh nghiệp lớn thường có tỷ lệ chi phí nhân sự thấp hơn và thu nhập bình quân cao hơn, nên so trong nhóm cùng cỡ công bằng hơn.</p></div></div>
+  <div class="card cuon" style="padding:0"><table id="bangQm"></table></div>
+</div></section>
+
+<section class="sec" id="xu-huong"><div class="wrap">
+  <div class="dau"><div><div class="eyebrow">3 · Xu hướng 2020–2025</div><h2>Ngành đang đi về đâu, công ty bạn đi cùng hay ngược?</h2><p>Đường đậm là trung vị ngành, dải mờ là khoảng P25–P75. Chấm vàng là công ty bạn ở năm đã chọn; doanh nghiệp chọn ở mục xếp hạng hiện thành đường riêng.</p></div></div>
+  <div class="card">
+    <div class="chon-cs" id="chonCs"></div>
+    <div id="bdXh" style="margin-top:12px"></div>
+    <div class="chu-giai" id="cgXh"></div>
+  </div>
+</div></section>
+
+<section class="sec" id="xep-hang"><div class="wrap">
+  <div class="dau"><div><div class="eyebrow">4 · Xếp hạng và đối thủ</div><h2>79 doanh nghiệp, sắp theo chỉ số bạn chọn</h2><p>Gõ mã hoặc tên để tìm. Đánh dấu tối đa 5 doanh nghiệp để so cạnh nhau và vẽ lên biểu đồ xu hướng.</p></div></div>
+  <div class="hang" style="margin-bottom:12px">
+    <label class="o" style="flex:1 1 220px">Chỉ số<select id="xhCs"></select></label>
+    <label class="o" style="flex:0 1 130px">Năm<select id="xhNam"></select></label>
+    <label class="o" style="flex:1 1 220px">Tìm<input type="text" id="xhTim" placeholder="Ví dụ: VHM, Nam Long"></label>
+  </div>
+  <div class="bang-cuon"><table id="bangXh"></table></div>
+  <div class="hang" style="margin-top:14px;justify-content:space-between">
+    <div class="ss-chon" id="ssChon"><span class="small muted">Chưa chọn doanh nghiệp nào để so.</span></div>
+  </div>
+  <div id="bangSsBoc" class="card cuon" style="padding:0;margin-top:12px" hidden><table id="bangSs"></table></div>
+</div></section>
+
+<section class="sec" id="quy-luong"><div class="wrap">
+  <div class="dau"><div><div class="eyebrow">5 · Kịch bản quỹ lương năm tới</div><h2>Doanh thu kế hoạch thế này thì quỹ chi phí nhân sự nên bao nhiêu?</h2><p>Lấy tỷ lệ chi phí nhân sự trên doanh thu của ngành (năm và nhóm đã chọn ở mục 1) nhân với doanh thu kế hoạch. Bốn mốc để đối chiếu, không phải khuyến nghị.</p></div></div>
+  <div class="kb">
+    <div class="card"><h3>Kế hoạch của bạn</h3>
+      <div class="bo-chon" style="grid-template-columns:1fr">
+        <label class="o">Doanh thu kế hoạch năm tới <small>tỷ đồng</small><input type="number" id="khDt" min="0" step="any"></label>
+        <label class="o">Lao động bình quân kế hoạch <small>người</small><input type="number" id="khLd" min="1" step="1"></label>
+      </div>
+      <p class="tiny muted" style="margin:10px 0 0">Số hiện tại lấy từ mục 1. Mặc định: doanh thu tăng 10%, lao động giữ nguyên.</p>
+    </div>
+    <div class="card cuon" style="padding:0"><table id="bangKh"></table></div>
+  </div>
+  <div class="note" id="khDoc" style="margin-top:12px"></div>
+</div></section>
+
+<section class="sec" id="dung-vao-viec"><div class="wrap">
+  <div class="dau"><div><div class="eyebrow">6 · Dùng vào việc gì</div><h2>Sáu câu hỏi thật, tệp này trả lời được ngay</h2><p>Mỗi tình huống là một câu hỏi phòng nhân sự hay nhận được, và chỗ lấy câu trả lời trong chính tệp Excel này hoặc trang này.</p></div></div>
+  <div class="th-luoi">
+    <div class="th"><div class="ai">Giám đốc hỏi</div><h3>"Chi phí nhân sự của ta cao hay thấp?"</h3><p>Không có mốc thì chỉ trả lời được "tăng so với năm ngoái". Có mốc ngành thì trả lời được bằng vị trí.</p><div class="vd" id="vd1"></div><a href="#vi-tri">Mục 1 · Vị trí</a></div>
+    <div class="th"><div class="ai">Lập ngân sách</div><h3>"Năm tới xin quỹ lương bao nhiêu thì hợp lý?"</h3><p>Nhân doanh thu kế hoạch với tỷ lệ của ngành ở ba mốc P25, trung vị, P75: có ngay ba con số để thương lượng với tài chính.</p><div class="vd" id="vd2"></div><a href="#quy-luong">Mục 5 · Kịch bản quỹ lương</a></div>
+    <div class="th"><div class="ai">Giữ người</div><h3>"Ta trả có cạnh tranh với đối thủ không?"</h3><p>Thu nhập bình quân của từng doanh nghiệp niêm yết cùng ngành, từng năm, tính từ chính báo cáo họ công bố. Chọn 5 đối thủ để so cạnh nhau.</p><div class="vd" id="vd3"></div><a href="#xep-hang">Mục 4 · Xếp hạng và đối thủ</a></div>
+    <div class="th"><div class="ai">Định biên</div><h3>"Doanh thu kế hoạch 2.000 tỷ thì cần bao nhiêu người?"</h3><p>Doanh thu mỗi người của ngành là mốc kiểm tra định biên. Chia doanh thu kế hoạch cho mốc trung vị ra số người ngành thường cần.</p><div class="vd" id="vd4"></div><a href="#thang-chuan">Mục 2 · Thang chuẩn</a></div>
+    <div class="th"><div class="ai">Tuyển dụng</div><h3>"Ứng viên nói công ty cũ trả cao hơn, kiểm tra được không?"</h3><p>Tra thu nhập bình quân của công ty đó qua 6 năm. Đó là mức chi bình quân toàn công ty, đủ để biết ứng viên đang nói về một nơi trả cao hay thấp so với ngành.</p><div class="vd" id="vd5"></div><a href="#xep-hang">Mục 4 · tìm theo mã</a></div>
+    <div class="th"><div class="ai">Viết tờ trình</div><h3>"Số này lấy ở đâu, có dẫn nguồn được không?"</h3><p>Mỗi số đều từ báo cáo tài chính năm đã kiểm toán, công bố công khai. Sheet DOANH_NGHIEP ghi rõ từng doanh nghiệp, từng năm, nguồn của chi phí nhân sự.</p><div class="vd" id="vd6"></div><a href="#vi-tri">Mục 1 · Đoạn viết sẵn</a></div>
+  </div>
+  <div class="note" style="margin-top:14px">Cùng một tệp, người tư vấn nhân sự dựng được bảng chuẩn cho khách trong một buổi; giảng viên có bộ số thật cho bài tập; người phân tích có năng suất lao động của 79 doanh nghiệp để so với báo cáo thường niên.</div>
+</div></section>
+
+<section class="sec" id="goi"><div class="wrap">
+  <div class="dau"><div><div class="eyebrow">Gói dữ liệu</div><h2>Trong tệp ngành Bất động sản có gì</h2><p>Một tệp Excel, mở bằng Excel hay Google Sheets. Trang này dựng chỉ từ một sheet trong đó để cho thấy người mua tự làm được công cụ riêng.</p></div></div>
+  <div class="goi">
+    <div class="card">
+      <ul>
+        <li><b>CHUAN_NGANH</b>: thang P10–P90 của 11 chỉ số, gộp 2023–2025, kèm cột toàn thị trường để đối chiếu.</li>
+        <li><b>THEO_NAM</b>: trung vị từng năm 2020–2025 của ngành.</li>
+        <li><b>THEO_QUY_MO</b>: 4 nhóm quy mô doanh thu, khoảng P25–P75.</li>
+        <li><b>DOANH_NGHIEP</b>: 471 dòng, mỗi doanh nghiệp một dòng mỗi năm, 22 cột: chi phí nhân sự, doanh thu, tổng chi phí, lợi nhuận, lao động, 8 chỉ số, tổng tài sản, ROE, nguồn số.</li>
+        <li><b>TU_SO_SANH</b>: nhập 5 số, Excel tự tính vị trí phân vị (cùng cách tính với trang này).</li>
+        <li><b>GIOI_THIEU</b>: định nghĩa, cách tính, hệ số giá 2025, chất lượng và miễn trừ.</li>
+      </ul>
+      <p class="small muted" style="margin:12px 0 6px">Bộ 20 gói còn có 14 ngành khác, bảng ngành × quy mô, khối tài chính (ngân hàng, chứng khoán, bảo hiểm), thu nhập và ngân sách lương, và bộ dữ liệu đầy đủ 705 doanh nghiệp.</p>
+      <div class="nganh-khac" id="nganhKhac"></div>
+    </div>
+    <div class="card lien-he">
+      <h3 style="font-size:17px">Nhận bản xem mẫu hoặc đặt mua</h3>
+      <p class="small muted" style="margin:0">Nhắn mã ngành bạn cần. Bản xem mẫu là tệp Excel đã giới hạn số dòng.</p>
+      <div class="dong"><span><span class="tiny muted" style="display:block">Zalo</span><code id="lkZalo">0934 453 555</code></span><button class="btn g sm" data-chep="0934453555">Sao chép</button></div>
+      <div class="dong"><span><span class="tiny muted" style="display:block">Thư điện tử</span><code>daohaianh85@gmail.com</code></span><button class="btn g sm" data-chep="daohaianh85@gmail.com">Sao chép</button></div>
+      <div class="hang"><a class="btn g sm" href="https://daohaianh85.github.io/so_lieu/?utm_source=mau-bds" target="_blank" rel="noopener">Tra cứu 705 doanh nghiệp</a><a class="btn g sm" href="https://daohaianh85.github.io/kham/?utm_source=mau-bds" target="_blank" rel="noopener">Phòng khám doanh nghiệp</a></div>
+    </div>
+  </div>
+</div></section>
+</div>
+</main>
+
+<footer class="ft"><div class="wrap">
+  <p><b>Nguồn:</b> báo cáo tài chính năm đã kiểm toán 2021, 2023, 2025 của các doanh nghiệp niêm yết HOSE, HNX ngành Bất động sản (mỗi báo cáo hai năm, thành 2020–2025); trích, chuẩn hoá và kiểm định bởi dự án Thu thập dữ liệu BCTC niêm yết, số liệu sau vòng làm sạch thứ 9 (20/10/2026), đóng gói 25/10/2026.</p>
+  <p><b>Cách tính:</b> chi phí nhân sự là chi phí nhân công trong thuyết minh chi phí sản xuất kinh doanh theo yếu tố. Tỷ lệ chi phí chỉ tính trên doanh nghiệp có chỉ tiêu này; chỉ số đầu người chỉ tính khi số lao động cùng phạm vi với chi phí. Thu nhập giá 2025 nhân hệ số CPI bình quân năm. Vị trí phân vị theo số dòng có giá trị trong nhóm.</p>
+  <p><b>Miễn trừ:</b> số liệu tổng hợp từ báo cáo công bố công khai, sai số đọc còn lại ước khoảng 1%; dùng để tham khảo, không thay thế báo cáo gốc. Trước khi trích dẫn số của một doanh nghiệp cụ thể, đối chiếu báo cáo gốc. Số mẫu điền sẵn ở mục 1 là công ty giả định.</p>
+</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="tip" id="tip" hidden></div>
+
+<script src="du-lieu/bat-dong-san.js"></script>
+<script>
+(function(){
+'use strict';
+const M=DL.meta, K={}; M.cot.forEach((c,i)=>K[c]=i);
+const NAM=['2020','2021','2022','2023','2024','2025'];
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const so=(v,d=1)=> (v==null||!isFinite(v)) ? '—' : v.toLocaleString('vi-VN',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pt=(v,d=1)=> (v==null||!isFinite(v)) ? '—' : so(v*100,d)+'%';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const boDau=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
+
+/* 7 chỉ số dùng trên trang. tinh(i,y): từ 5 số nhập; kieu pct|so; d: số lẻ; dn: cần số lao động */
+const CS={
+  tl_ns_dt:{ten:'Chi phí nhân sự / doanh thu',ngan:'CP nhân sự / doanh thu',kieu:'pct',d:1,tinh:i=>i.cp/i.dt,huong:'cao hơn là chi nặng hơn'},
+  tl_ns_cp:{ten:'Chi phí nhân sự / tổng chi phí',ngan:'CP nhân sự / tổng chi phí',kieu:'pct',d:1,tinh:i=>i.cp/i.tcp},
+  hcroi:{ten:'HCROI: giá trị tạo ra trên mỗi đồng chi cho người',ngan:'HCROI',kieu:'so',dv:'lần',d:2,tinh:i=>(i.dt-(i.tcp-i.cp))/i.cp},
+  lntt_ns:{ten:'Lợi nhuận trước thuế / chi phí nhân sự',ngan:'LNTT / CP nhân sự',kieu:'so',dv:'lần',d:2,tinh:i=>i.lntt/i.cp},
+  tn25:{ten:'Thu nhập bình quân (giá 2025)',ngan:'Thu nhập bình quân',kieu:'so',dv:'triệu đồng/người/tháng',d:1,tinh:(i,y)=>i.cp*1000/i.ld/12*M.cpi[y],dn:true},
+  dt_ng:{ten:'Doanh thu mỗi người',ngan:'Doanh thu / người',kieu:'so',dv:'tỷ đồng/năm',d:2,tinh:i=>i.dt/i.ld,dn:true},
+  lntt_ng:{ten:'Lợi nhuận trước thuế mỗi người',ngan:'LNTT / người',kieu:'so',dv:'triệu đồng/năm',d:0,tinh:i=>i.lntt*1000/i.ld,dn:true}
+};
+const CS_KEYS=Object.keys(CS);
+const fmt=(k,v)=>CS[k].kieu==='pct'?pt(v,CS[k].d):so(v,CS[k].d);
+const dvCua=k=>CS[k].kieu==='pct'?'%':CS[k].dv;
+
+/* ---- dữ liệu ---- */
+const DN=DL.dn; const theoMa={}; DN.forEach(d=>theoMa[d.ma]=d);
+function namCua(sc){ return sc==='gop'?['2023','2024','2025']:[sc]; }
+function dong(sc,qm){ const ys=namCua(sc), out=[]; for(const d of DN) for(const y of ys){ const r=d.nam[y]; if(!r) continue; if(qm!=null && r[K.qm]!==qm) continue; out.push({d,y,r}); } return out; }
+function giaTri(rows,k){ const a=[]; for(const x of rows){ const v=x.r[K[k]]; if(v!=null&&isFinite(v)) a.push(v);} return a.sort((p,q)=>p-q); }
+function phanVi(a,p){ if(!a.length) return null; const h=(a.length-1)*p, lo=Math.floor(h), hi=Math.ceil(h); return a[lo]+(a[hi]-a[lo])*(h-lo); }
+function viTri(a,x){ if(!a.length) return null; let n=0; for(const v of a){ if(v<=x) n++; } return n/a.length; }
+function qmCua(dt){ return dt<500?0:dt<2000?1:dt<10000?2:3; }
+function soDn(rows){ return new Set(rows.map(x=>x.d.ma)).size; }
+
+/* ---- trạng thái ---- */
+const S={sc:'2025',qmChon:'all',ss:[],cs:'tl_ns_dt',xhCs:'tl_ns_dt',xhNam:'2025',sap:-1};
+function docNhap(){ const g=id=>parseFloat($(id).value); return {dt:g('#inDt'),cp:g('#inCp'),tcp:g('#inTcp'),lntt:g('#inLntt'),ld:g('#inLd')}; }
+function hopLe(i){ return [i.dt,i.cp,i.tcp,i.lntt].every(v=>isFinite(v)&&v>0) && isFinite(i.ld)&&i.ld>0; }
+function qmHieuLuc(i){ if(S.qmChon==='all') return null; if(S.qmChon==='tu') return hopLe(i)?qmCua(i.dt):null; return +S.qmChon; }
+function namTinh(){ return S.sc==='gop'?'2025':S.sc; }
+function tenPhamVi(i){ const q=qmHieuLuc(i); const n=S.sc==='gop'?'gộp 2023–2025':'năm '+S.sc; return (q==null?'cả ngành':'nhóm '+M.qm[q])+', '+n; }
+
+/* ---- dải số đầu trang ---- */
+function veDaiSo(){
+  const r25=dong('2025',null), co=giaTri(r25,'tl_ns_dt').length, tn=giaTri(dong('gop',null),'tn25');
+  $('#daiSo').innerHTML=[[DN.length,'doanh nghiệp niêm yết'],[so(M.so_dong,0),'dòng công ty–năm, 2020–2025'],[pt(phanVi(giaTri(dong('gop',null),'tl_ns_dt'),.5),1),'chi phí nhân sự / doanh thu, trung vị 2023–2025'],[so(phanVi(tn,.5),1)+' tr','thu nhập bình quân/tháng, trung vị 2023–2025'],[co,'doanh nghiệp có chi phí nhân công theo yếu tố năm 2025']]
+    .map(x=>`<div><b class="num">${x[0]}</b><span>${x[1]}</span></div>`).join('');
+}
+
+/* ---- mục 1: vị trí ---- */
+function thanhPhanVi(a,x,k){
+  const p=[.1,.25,.5,.75,.9].map(q=>phanVi(a,q)); if(a.length<5) return '<svg class="thanh" viewBox="0 0 400 44" preserveAspectRatio="none"></svg>';
+  const lo=p[0], hi=p[4]; const span=(hi-lo)||1; const X=v=>Math.max(0,Math.min(1,(v-lo)/span))*340+30;
+  const ngoai=x<lo?'trái':x>hi?'phải':'';
+  const chu=v=>fmt(k,v);
+  // nhãn trung vị ở trên thanh, P10/P90 ở dưới: không bao giờ đè nhau
+  return `<svg class="thanh" viewBox="0 0 400 44" role="img" aria-label="Vị trí ${esc(chu(x))} trên thang ${esc(chu(lo))} đến ${esc(chu(hi))}">
+    <text x="${X(p[2])}" y="10" font-size="10.5" fill="#0B3D66" text-anchor="middle" font-weight="600">trung vị ${esc(chu(p[2]))}</text>
+    <line x1="30" x2="370" y1="24" y2="24" stroke="#DCE4EE" stroke-width="6" stroke-linecap="round"/>
+    <line x1="${X(p[1])}" x2="${X(p[3])}" y1="24" y2="24" stroke="#B8C7D8" stroke-width="6"/>
+    <line x1="${X(p[2])}" x2="${X(p[2])}" y1="15" y2="33" stroke="#0B3D66" stroke-width="2"/>
+    <circle cx="${X(x)}" cy="24" r="6.5" fill="#C99A2E" stroke="#fff" stroke-width="2"/>
+    ${ngoai?`<text x="${ngoai==='trái'?8:392}" y="28" font-size="11" fill="#8A6512" text-anchor="middle">${ngoai==='trái'?'◀':'▶'}</text>`:''}
+    <text x="30" y="42" font-size="10.5" fill="#6B7F95" text-anchor="start">P10 ${esc(chu(lo))}</text>
+    <text x="200" y="42" font-size="10.5" fill="#6B7F95" text-anchor="middle">P25–P75: dải đậm</text>
+    <text x="370" y="42" font-size="10.5" fill="#6B7F95" text-anchor="end">P90 ${esc(chu(hi))}</text></svg>`;
+}
+function nhanViTri(v){ if(v==null) return ['trong','—']; if(v<.25) return ['thap','Nhóm 25% thấp']; if(v>.75) return ['cao','Nhóm 25% cao']; return ['giua','Nửa giữa']; }
+let KQ=null; // kết quả mục 1 để các mục khác dùng
+function tinhViTri(){
+  const i=docNhap(), q=qmHieuLuc(i), rows=dong(S.sc,q), y=namTinh();
+  $('#pvGhi').textContent=`So với ${tenPhamVi(i)}: ${soDn(rows)} doanh nghiệp, ${rows.length} dòng số. Phạm vi này cũng dùng cho mục 2 và mục 5.`;
+  if(!hopLe(i)){ $('#luoiVt').innerHTML='<div class="note vang" style="grid-column:1/-1">Điền đủ 5 số lớn hơn 0 để tính.</div>'; $('#docNhanh').innerHTML=''; $('#memo').value=''; KQ=null; return; }
+  KQ={i,q,rows,y,cs:{}};
+  const the=[];
+  for(const k of CS_KEYS){
+    const c=CS[k], a=giaTri(rows,k), x=c.tinh(i,y), vt=viTri(a,x), tv=phanVi(a,.5);
+    KQ.cs[k]={x,vt,tv,n:a.length,p25:phanVi(a,.25),p75:phanVi(a,.75)};
+    const [cl,nh]=a.length<5?['trong','Thiếu số ngành']:nhanViTri(vt);
+    const doc=a.length<5?'Nhóm này dưới 5 doanh nghiệp có số.':`Cao hơn ${pt(vt,0)} doanh nghiệp trong nhóm · trung vị ${fmt(k,tv)}`;
+    the.push(`<div class="vt"><div class="ten"><span>${esc(c.ten)}</span><span class="nhan ${cl}">${nh}</span></div><div class="gt num">${fmt(k,x)}<small>${esc(dvCua(k))}</small></div>${thanhPhanVi(a,x,k)}<div class="doc">${doc}</div></div>`);
+  }
+  $('#luoiVt').innerHTML=the.join('');
+  // đọc nhanh
+  const c=KQ.cs, ten=tenPhamVi(i), d=[];
+  const ss=(x,tv)=> x>tv*1.02?'cao hơn':x<tv*0.98?'thấp hơn':'xấp xỉ';
+  if(c.tl_ns_dt.n>=5) d.push(`Chi phí nhân sự bằng <b>${pt(c.tl_ns_dt.x)}</b> doanh thu, ${ss(c.tl_ns_dt.x,c.tl_ns_dt.tv)} trung vị ngành (${pt(c.tl_ns_dt.tv)}); cao hơn ${pt(c.tl_ns_dt.vt,0)} doanh nghiệp trong nhóm.`);
+  if(c.tn25.n>=5) d.push(`Thu nhập bình quân <b>${so(c.tn25.x)} triệu/người/tháng</b>, ${ss(c.tn25.x,c.tn25.tv)} trung vị ${so(c.tn25.tv)} triệu; nửa giữa của ngành trả từ ${so(c.tn25.p25)} đến ${so(c.tn25.p75)} triệu.`);
+  if(c.hcroi.n>=5) d.push(`Mỗi đồng chi cho người tạo ra <b>${so(c.hcroi.x,2)} đồng</b> giá trị (HCROI), ngành ${so(c.hcroi.tv,2)}.`);
+  if(c.dt_ng.n>=5) d.push(`Mỗi người làm ra <b>${so(c.dt_ng.x,2)} tỷ</b> doanh thu một năm, ngành ${so(c.dt_ng.tv,2)} tỷ; lợi nhuận trước thuế mỗi người ${so(c.lntt_ng.x,0)} triệu so với ${so(c.lntt_ng.tv,0)} triệu.`);
+  $('#docNhanh').innerHTML=d.map(t=>`<li>${t}</li>`).join('');
+  // đoạn tờ trình
+  const nguon=`Nguồn: báo cáo tài chính năm đã kiểm toán của ${soDn(rows)} doanh nghiệp bất động sản niêm yết HOSE, HNX (${ten}), bộ dữ liệu Bệnh viện Doanh nghiệp, đóng gói ${M.dong_goi}.`;
+  $('#memo').value=`So với ${ten}, chi phí nhân sự của Công ty đang ở mức ${pt(c.tl_ns_dt.x)} doanh thu thuần, ${ss(c.tl_ns_dt.x,c.tl_ns_dt.tv)} mức trung vị ngành là ${pt(c.tl_ns_dt.tv)} (nửa số doanh nghiệp trong ngành nằm trong khoảng ${pt(c.tl_ns_dt.p25)}–${pt(c.tl_ns_dt.p75)}). Thu nhập bình quân ước ${so(c.tn25.x)} triệu đồng/người/tháng, ${ss(c.tn25.x,c.tn25.tv)} mức trung vị ngành ${so(c.tn25.tv)} triệu đồng (khoảng giữa ${so(c.tn25.p25)}–${so(c.tn25.p75)} triệu đồng). Năng suất ${so(c.dt_ng.x,2)} tỷ đồng doanh thu/người/năm so với trung vị ngành ${so(c.dt_ng.tv,2)} tỷ đồng; hiệu suất chi phí nhân sự (HCROI) ${so(c.hcroi.x,2)} lần so với ${so(c.hcroi.tv,2)} lần.\n${nguon}`;
+  veThangChuan(); veQuyLuong(); veXuHuong(); veTinhHuong();
+}
+
+/* ---- mục 2: thang chuẩn ---- */
+function veThangChuan(){
+  const i=docNhap(), q=qmHieuLuc(i), rows=dong(S.sc,q);
+  $('#tcNhan').textContent=tenPhamVi(i)+' · '+soDn(rows)+' doanh nghiệp';
+  let h='<thead><tr><th>Chỉ số</th><th>Số dòng</th><th>P10</th><th>P25</th><th>Trung vị</th><th>P75</th><th>P90</th>'+(KQ?'<th>Công ty bạn</th>':'')+'</tr></thead><tbody>';
+  for(const k of CS_KEYS){ const a=giaTri(rows,k), du=a.length>=5; const p=[.1,.25,.5,.75,.9].map(x=>du?fmt(k,phanVi(a,x)):'—');
+    h+=`<tr><td>${esc(CS[k].ten)} <span class="tiny muted">(${esc(dvCua(k))})</span></td><td class="num">${a.length}</td><td class="num">${p[0]}</td><td class="num">${p[1]}</td><td class="num"><b>${p[2]}</b></td><td class="num">${p[3]}</td><td class="num">${p[4]}</td>${KQ?`<td class="num" style="color:var(--gold-ink);font-weight:700">${fmt(k,KQ.cs[k].x)}</td>`:''}</tr>`; }
+  $('#bangTc').innerHTML=h+'</tbody>';
+  // theo quy mô
+  let g='<thead><tr><th>Quy mô doanh thu</th><th>Số DN</th><th>CP nhân sự / doanh thu</th><th>P25–P75</th><th>Thu nhập BQ (tr/tháng)</th><th>P25–P75</th><th>HCROI</th><th>Doanh thu / người (tỷ)</th></tr></thead><tbody>';
+  for(let j=0;j<4;j++){ const rr=dong(S.sc,j), a=giaTri(rr,'tl_ns_dt'), b=giaTri(rr,'tn25'), c=giaTri(rr,'hcroi'), e=giaTri(rr,'dt_ng');
+    const f=(arr,k,p)=>arr.length>=5?fmt(k,phanVi(arr,p)):'—';
+    g+=`<tr${q===j?' class="chon"':''}><td>${esc(M.qm[j])}${q===j?' <span class="chip vang" style="margin-left:6px">công ty bạn</span>':''}</td><td class="num">${soDn(rr)}</td><td class="num"><b>${f(a,'tl_ns_dt',.5)}</b></td><td class="num muted">${a.length>=5?pt(phanVi(a,.25))+' – '+pt(phanVi(a,.75)):'—'}</td><td class="num"><b>${f(b,'tn25',.5)}</b></td><td class="num muted">${b.length>=5?so(phanVi(b,.25))+' – '+so(phanVi(b,.75)):'—'}</td><td class="num">${f(c,'hcroi',.5)}</td><td class="num">${f(e,'dt_ng',.5)}</td></tr>`; }
+  $('#bangQm').innerHTML=g+'</tbody>';
+}
+
+/* ---- mục 3: xu hướng ---- */
+const MAU=['var(--s1)','var(--s2)','var(--s3)','var(--s4)','var(--s5)'];
+function veXuHuong(){
+  const k=S.cs, c=CS[k];
+  $('#chonCs').innerHTML=CS_KEYS.map(x=>`<button type="button" data-cs="${x}" class="${x===k?'on':''}">${esc(CS[x].ngan)}</button>`).join('');
+  const tv=[],p25=[],p75=[],n=[];
+  for(const y of NAM){ const a=giaTri(dong(y,null),k); n.push(a.length); tv.push(phanVi(a,.5)); p25.push(phanVi(a,.25)); p75.push(phanVi(a,.75)); }
+  const ban=KQ&&KQ.cs[k].n>=5?{y:KQ.y,v:KQ.cs[k].x}:null;
+  const dt=S.ss.map((ma,j)=>({ma,mau:MAU[j],v:NAM.map(y=>{const d=theoMa[ma];const r=d&&d.nam[y];return r?r[K[k]]:null;})}));
+  let vals=[...tv,...p25,...p75].filter(v=>v!=null); if(ban) vals.push(ban.v); dt.forEach(s=>s.v.forEach(v=>{if(v!=null)vals.push(v);}));
+  if(!vals.length){ $('#bdXh').innerHTML='<p class="muted">Không đủ số.</p>'; return; }
+  let lo=Math.min(...vals), hi=Math.max(...vals); if(k==='tl_ns_dt'||k==='tl_ns_cp'){lo=Math.max(0,lo);} const pad=(hi-lo)*0.12||1; lo=lo-pad; hi=hi+pad; if(c.kieu==='pct'&&lo<0) lo=0;
+  const W=760,H=300,ML=64,MR=20,MT=16,MB=34; const X=j=>ML+j*(W-ML-MR)/5, Y=v=>MT+(hi-v)*(H-MT-MB)/(hi-lo);
+  const nhan=v=>c.kieu==='pct'?pt(v,c.d>1?1:0):so(v,c.d>=2?1:c.d);
+  const ticks=[0,1,2,3,4].map(t=>lo+(hi-lo)*t/4);
+  let s=`<svg class="bd" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(c.ten)} 2020–2025, trung vị ngành và khoảng P25–P75">`;
+  s+=ticks.map(t=>`<line x1="${ML}" x2="${W-MR}" y1="${Y(t)}" y2="${Y(t)}" stroke="#E6ECF3"/><text x="${ML-8}" y="${Y(t)+4}" font-size="11" fill="#6B7F95" text-anchor="end">${esc(nhan(t))}</text>`).join('');
+  s+=NAM.map((y,j)=>`<text x="${X(j)}" y="${H-10}" font-size="12" fill="#44586E" text-anchor="middle">${y}</text>`).join('');
+  const ok=j=>p25[j]!=null&&p75[j]!=null;
+  const idx=NAM.map((_,j)=>j).filter(ok);
+  if(idx.length>1) s+=`<polygon points="${idx.map(j=>X(j)+','+Y(p75[j])).join(' ')} ${idx.slice().reverse().map(j=>X(j)+','+Y(p25[j])).join(' ')}" fill="#0B3D66" opacity=".09"/>`;
+  s+=`<polyline points="${idx.map(j=>X(j)+','+Y(tv[j])).join(' ')}" fill="none" stroke="#0B3D66" stroke-width="2.5" stroke-linejoin="round"/>`;
+  s+=idx.map(j=>`<circle cx="${X(j)}" cy="${Y(tv[j])}" r="3.5" fill="#0B3D66"/>`).join('');
+  dt.forEach(sr=>{ const pts=NAM.map((y,j)=>sr.v[j]!=null?[X(j),Y(sr.v[j])]:null); let seg=[],cur=[]; pts.forEach(p=>{if(p)cur.push(p);else{if(cur.length)seg.push(cur);cur=[];}}); if(cur.length)seg.push(cur);
+    s+=seg.map(g=>`<polyline points="${g.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${sr.mau}" stroke-width="2" stroke-linejoin="round"/>`).join('')+pts.map(p=>p?`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="${sr.mau}"/>`:'').join(''); });
+  if(ban){ const j=NAM.indexOf(ban.y); s+=`<circle cx="${X(j)}" cy="${Y(ban.v)}" r="7" fill="#C99A2E" stroke="#fff" stroke-width="2.5"/>`; }
+  // vùng bắt chuột
+  s+=NAM.map((y,j)=>`<rect data-j="${j}" x="${X(j)-(W-ML-MR)/10}" y="0" width="${(W-ML-MR)/5}" height="${H}" fill="transparent"/>`).join('');
+  s+='</svg>';
+  $('#bdXh').innerHTML=s;
+  $('#cgXh').innerHTML=`<span><i style="background:#0B3D66"></i>Trung vị ngành</span><span><i style="background:#0B3D66;opacity:.2;height:10px"></i>Khoảng P25–P75</span>${ban?'<span><i style="background:#C99A2E;height:10px;width:10px;border-radius:50%"></i>Công ty bạn ('+ban.y+')</span>':''}${dt.map(sr=>`<span><i style="background:${sr.mau}"></i>${sr.ma}${sr.v.every(v=>v==null)?' <span class="muted">(không có số cho chỉ số này)</span>':''}</span>`).join('')}<span class="muted">Số doanh nghiệp từng năm: ${n.join(' · ')}</span>`;
+  const tip=$('#tip'), svg=$('#bdXh svg');
+  svg.addEventListener('mousemove',e=>{ const r=e.target.closest('rect[data-j]'); if(!r){tip.hidden=true;return;} const j=+r.dataset.j;
+    let h=`<b>${NAM[j]}</b><br>Trung vị ${fmt(k,tv[j])} · P25–P75 ${fmt(k,p25[j])}–${fmt(k,p75[j])} · ${n[j]} DN`;
+    dt.forEach(sr=>{ if(sr.v[j]!=null) h+=`<br>${sr.ma}: ${fmt(k,sr.v[j])}`; }); if(ban&&ban.y===NAM[j]) h+=`<br>Công ty bạn: ${fmt(k,ban.v)}`;
+    tip.innerHTML=h; tip.hidden=false; const bw=tip.offsetWidth; tip.style.left=Math.min(window.innerWidth-bw-12,e.clientX+14)+'px'; tip.style.top=(e.clientY+14)+'px'; });
+  svg.addEventListener('mouseleave',()=>tip.hidden=true);
+}
+
+/* ---- mục 4: xếp hạng ---- */
+function veXepHang(){
+  const k=S.xhCs, y=S.xhNam, c=CS[k], rows=dong(y,null), a=giaTri(rows,k), q=boDau($('#xhTim').value.trim());
+  let list=rows.map(x=>({ma:x.d.ma,ten:x.d.ten,qm:x.r[K.qm],v:x.r[K[k]],ld:x.r[K.ld],dt:x.r[K.dt],ly:x.r[K.dau_nguoi],yt:x.r[K.yt]}));
+  if(q) list=list.filter(x=>boDau(x.ma).includes(q)||boDau(x.ten).includes(q));
+  list.sort((p,r)=>{ const pv=p.v==null?-Infinity*S.sap:p.v, rv=r.v==null?-Infinity*S.sap:r.v; if(p.v==null&&r.v==null) return p.ma<r.ma?-1:1; if(p.v==null) return 1; if(r.v==null) return -1; return (rv-pv)*S.sap; });
+  const tv=phanVi(a,.5);
+  let h=`<thead><tr><th>Mã</th><th style="text-align:left">Doanh nghiệp</th><th>Quy mô DT</th><th class="sap" id="thSap">${esc(c.ngan)} ${S.sap<0?'▼':'▲'}</th><th>Vị trí trong ngành</th><th>Lao động</th><th>So</th></tr></thead><tbody>`;
+  h+=`<tr class="tv"><td>Ngành</td><td class="ten">Trung vị ${y}, ${a.length} doanh nghiệp có số</td><td></td><td class="num">${fmt(k,tv)}</td><td class="num">50%</td><td></td><td></td></tr>`;
+  for(const x of list){ const vt=x.v==null?null:viTri(a,x.v); const chon=S.ss.includes(x.ma);
+    const ly=x.v==null?(c.dn?(x.ld==null?'thiếu số lao động':(typeof x.ly==='string'?x.ly:'không dùng cho đầu người')):(x.yt?'thiếu số':'chỉ có chi phí nhân viên bán hàng, quản lý')):'';
+    h+=`<tr${chon?' class="chon"':''}><td><b>${x.ma}</b></td><td class="ten">${esc(x.ten)}</td><td class="num tiny">${x.qm==null?'—':esc(M.qm[x.qm])}</td><td class="num">${x.v==null?`<span class="tiny muted">${esc(ly)}</span>`:fmt(k,x.v)}</td><td class="num">${vt==null?'—':`<span class="pv"><i style="width:${vt*100}%"></i></span>${pt(vt,0)}`}</td><td class="num">${x.ld==null?'—':so(x.ld,0)}</td><td><input type="checkbox" data-ma="${x.ma}" ${chon?'checked':''} aria-label="So sánh ${x.ma}"></td></tr>`; }
+  $('#bangXh').innerHTML=h+'</tbody>';
+  $('#thSap').onclick=()=>{S.sap*=-1;veXepHang();};
+}
+function veSoSanh(){
+  const box=$('#ssChon');
+  if(!S.ss.length){ box.innerHTML='<span class="small muted">Chưa chọn doanh nghiệp nào để so.</span>'; $('#bangSsBoc').hidden=true; return; }
+  box.innerHTML='<span class="small muted">Đang so:</span>'+S.ss.map((ma,j)=>`<span class="chip" style="color:${MAU[j]};background:var(--surface-2)">${ma}<button type="button" data-bo="${ma}" aria-label="Bỏ ${ma}">×</button></span>`).join('')+(S.ss.length>=5?'<span class="tiny muted">Tối đa 5.</span>':'');
+  const y=S.xhNam, rows=dong(y,null);
+  let h=`<thead><tr><th>Chỉ số (${y})</th><th>Trung vị ngành</th>${S.ss.map((ma,j)=>`<th style="color:${MAU[j]}">${ma}</th>`).join('')}</tr></thead><tbody>`;
+  for(const k of CS_KEYS){ const a=giaTri(rows,k); h+=`<tr><td>${esc(CS[k].ngan)} <span class="tiny muted">(${esc(dvCua(k))})</span></td><td class="num"><b>${fmt(k,phanVi(a,.5))}</b></td>${S.ss.map(ma=>{const r=theoMa[ma].nam[y];const v=r?r[K[k]]:null;return `<td class="num">${v==null?'—':fmt(k,v)}</td>`;}).join('')}</tr>`; }
+  h+=`<tr><td>Doanh thu (tỷ)</td><td></td>${S.ss.map(ma=>{const r=theoMa[ma].nam[y];return `<td class="num">${r?so(r[K.dt],0):'—'}</td>`;}).join('')}</tr><tr><td>Lao động bình quân (người)</td><td></td>${S.ss.map(ma=>{const r=theoMa[ma].nam[y];return `<td class="num">${r&&r[K.ld]!=null?so(r[K.ld],0):'—'}</td>`;}).join('')}</tr>`;
+  // lý do thiếu số của từng doanh nghiệp đang so
+  const ly=S.ss.map(ma=>{ const r=theoMa[ma].nam[y]; if(!r) return `${ma}: không có báo cáo năm ${y}`; const t=[]; if(!r[K.yt]) t.push('chi phí nhân sự chỉ gồm nhân viên bán hàng và quản lý nên không tính tỷ lệ'); if(r[K.dau_nguoi]!==1) t.push(typeof r[K.dau_nguoi]==='string'&&r[K.dau_nguoi]?r[K.dau_nguoi].toLowerCase():'không dùng cho chỉ số đầu người'); return t.length?`${ma}: ${t.join('; ')}`:null; }).filter(Boolean);
+  if(ly.length) h+=`<tfoot><tr><td colspan="${S.ss.length+2}">Ô trống: ${ly.join(' · ')}.</td></tr></tfoot>`;
+  $('#bangSs').innerHTML=h+'</tbody>'; $('#bangSsBoc').hidden=false;
+}
+
+/* ---- mục 5: quỹ lương ---- */
+function veQuyLuong(){
+  if(!KQ){ $('#bangKh').innerHTML=''; $('#khDoc').textContent='Điền 5 số ở mục 1 trước.'; return; }
+  const i=KQ.i; if(!$('#khDt').dataset.tay) $('#khDt').value=Math.round(i.dt*1.1); if(!$('#khLd').dataset.tay) $('#khLd').value=Math.round(i.ld);
+  const dtk=parseFloat($('#khDt').value), ldk=parseFloat($('#khLd').value); if(!(dtk>0&&ldk>0)){ $('#bangKh').innerHTML=''; $('#khDoc').textContent='Điền doanh thu và lao động kế hoạch lớn hơn 0.'; return; }
+  const a=giaTri(KQ.rows,'tl_ns_dt'); const tlHt=i.cp/i.dt, tnHt=i.cp*1000/i.ld/12;
+  const moc=[['Giữ tỷ lệ hiện tại của công ty',tlHt],['Về mức P25 ngành (nhẹ hơn 3/4 ngành)',phanVi(a,.25)],['Về trung vị ngành',phanVi(a,.5)],['Về mức P75 ngành',phanVi(a,.75)]];
+  let h=`<thead><tr><th>Mốc</th><th>CP nhân sự / doanh thu</th><th>Quỹ (tỷ)</th><th>So hiện tại</th><th>Thu nhập BQ (tr/tháng), ${so(ldk,0)} người</th></tr></thead><tbody>`;
+  for(const [t,tl] of moc){ if(tl==null) continue; const quy=dtk*tl, tn=quy*1000/ldk/12; h+=`<tr><td style="white-space:normal">${t}</td><td class="num">${pt(tl)}</td><td class="num"><b>${so(quy,1)}</b></td><td class="num">${(quy>=i.cp?'+':'')+pt(quy/i.cp-1,1)}</td><td class="num">${so(tn,1)}</td></tr>`; }
+  const quyGiuTn=tnHt*ldk*12/1000;
+  h+=`<tr><td style="white-space:normal">Giữ thu nhập bình quân hiện tại (${so(tnHt,1)} tr) với ${so(ldk,0)} người</td><td class="num">${pt(quyGiuTn/dtk)}</td><td class="num"><b>${so(quyGiuTn,1)}</b></td><td class="num">${(quyGiuTn>=i.cp?'+':'')+pt(quyGiuTn/i.cp-1,1)}</td><td class="num">${so(tnHt,1)}</td></tr>`;
+  $('#bangKh').innerHTML=h+'</tbody>';
+  const tv=phanVi(a,.5), q50=dtk*tv;
+  $('#khDoc').innerHTML=`Với doanh thu kế hoạch <b>${so(dtk,0)} tỷ</b>: giữ tỷ lệ hiện tại thì quỹ là <b>${so(dtk*tlHt,1)} tỷ</b>; đưa về trung vị ngành (${pt(tv)}) thì quỹ là <b>${so(q50,1)} tỷ</b>, chênh ${so(q50-dtk*tlHt,1)} tỷ. Khoảng P25–P75 của ngành ứng với ${so(dtk*phanVi(a,.25),1)}–${so(dtk*phanVi(a,.75),1)} tỷ. Mốc ngành là điểm đối chiếu; quyết định còn tuỳ chiến lược, cơ cấu lao động và vị trí mà công ty muốn trả so với thị trường.`;
+}
+
+/* ---- mục 6: ví dụ trong thẻ tình huống ---- */
+function veTinhHuong(){
+  const r=dong('2025',null), tn=giaTri(r,'tn25'), dtng=giaTri(r,'dt_ng'), tl=giaTri(r,'tl_ns_dt');
+  const top=r.filter(x=>x.r[K.tn25]!=null).sort((p,q)=>q.r[K.tn25]-p.r[K.tn25]).slice(0,3);
+  const c=KQ?KQ.cs:null;
+  $('#vd1').innerHTML=c&&c.tl_ns_dt.n>=5?`Với số mẫu ở mục 1: <b>${pt(c.tl_ns_dt.x)}</b> doanh thu, cao hơn <b>${pt(c.tl_ns_dt.vt,0)}</b> doanh nghiệp trong nhóm; trung vị ngành ${pt(c.tl_ns_dt.tv)}.`:'Điền số ở mục 1 để thấy ví dụ.';
+  $('#vd2').innerHTML=`Ngành 2025: P25 <b>${pt(phanVi(tl,.25))}</b>, trung vị <b>${pt(phanVi(tl,.5))}</b>, P75 <b>${pt(phanVi(tl,.75))}</b> doanh thu. Doanh thu kế hoạch 1.500 tỷ cho ba mốc ${so(1500*phanVi(tl,.25),0)}, ${so(1500*phanVi(tl,.5),0)}, ${so(1500*phanVi(tl,.75),0)} tỷ.`;
+  $('#vd3').innerHTML=`Ba nơi chi cho người cao nhất năm 2025: ${top.map(x=>`<b>${x.d.ma}</b> ${so(x.r[K.tn25])} triệu`).join(', ')}; trung vị ngành ${so(phanVi(tn,.5))} triệu/người/tháng.`;
+  $('#vd4').innerHTML=`Doanh thu mỗi người năm 2025: trung vị <b>${so(phanVi(dtng,.5),2)} tỷ</b>. Kế hoạch 2.000 tỷ ứng với khoảng <b>${so(2000/phanVi(dtng,.5),0)} người</b> ở mức trung vị, ${so(2000/phanVi(dtng,.75),0)}–${so(2000/phanVi(dtng,.25),0)} người trong khoảng P25–P75.`;
+  // ví dụ: doanh nghiệp lớn có đủ 6 năm thu nhập và chuỗi không nhảy quá 1,8 lần
+  const duSau=DN.filter(d=>NAM.every(y=>d.nam[y]&&d.nam[y][K.tn25]!=null)).map(d=>{const v=NAM.map(y=>d.nam[y][K.tn25]);return {d,v,dt:d.nam['2025'][K.dt]||0,nhay:Math.max(...v)/Math.min(...v)};}).filter(x=>x.nhay<1.8).sort((a,b)=>b.dt-a.dt);
+  const vd=duSau[0]||{d:DN[0],v:NAM.map(y=>{const rr=DN[0].nam[y];return rr?rr[K.tn25]:null;})};
+  $('#vd5').innerHTML=`Ví dụ <b>${vd.d.ma}</b> (${esc(vd.d.ten)}), thu nhập bình quân giá 2025 từ 2020 đến 2025: ${vd.v.map(x=>x==null?'—':so(x,0)).join(' · ')} triệu/tháng.`;
+  $('#vd6').innerHTML=`Mỗi dòng trong sheet DOANH_NGHIEP ghi mã, năm, nguồn chi phí nhân sự và cờ dùng được cho chỉ số đầu người; năm 2025 có <b>${tl.length}</b> doanh nghiệp đủ số cho tỷ lệ chi phí và <b>${tn.length}</b> cho thu nhập bình quân.`;
+}
+
+/* ---- cổng mở trang và Sổ nhận (cùng địa chỉ Apps Script với trang khám) ---- */
+const SO_NHAN='https://script.google.com/macros/s/AKfycbxy6kw2UNVgK_FYirAOwa5XJRHIKzZTjaQuhhfkvoGMKZpTc6EJHwinL-uXxU0jVGRn/exec';
+const CS_PHIEN='cs 1.2 · 11/10/2026', PB='mau-bds 1.0 · 25/10/2026';
+const XEM_THU=/claude/.test(location.hostname);   // bản xem trên claude.ai không gửi được ra ngoài: không khoá, chỉ hiện mẫu biểu
+const kho={ lay(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }, ghi(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
+let PHIEN=kho.lay('mau_bds.phien'); if(!PHIEN){ PHIEN=Math.random().toString(36).slice(2,10); kho.ghi('mau_bds.phien',PHIEN); }
+const NGUON=(()=>{ const q=new URLSearchParams(location.search); let ref=''; try{ ref=document.referrer?new URL(document.referrer).hostname:''; }catch(e){}
+  return {nguon:q.get('utm_source')||'', kenh:q.get('utm_medium')||'', chien_dich:q.get('utm_campaign')||'', gioi_thieu:ref}; })();
+function guiSo(loai,du){
+  const goi={loai,luc:new Date().toISOString(),phien:PHIEN,nguon:NGUON,trang:'mau-bds',pb:PB,du:du||{}};
+  let body; try{ body=JSON.stringify(goi); }catch(e){ return Promise.resolve(false); }
+  try{ return fetch(SO_NHAN,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body,keepalive:true}).then(()=>true,()=>false); }catch(e){ return Promise.resolve(false); }
+}
+function suKien(ten,ct){ if(XEM_THU) return; const k='mau_bds.sk.'+ten; try{ if(sessionStorage.getItem(k)) return; sessionStorage.setItem(k,'1'); }catch(e){} guiSo('su_kien',{ten,ct:ct||{}}); }
+const KHOA=['thang-chuan','xu-huong','xep-hang','quy-luong','dung-vao-viec'];
+let DA_MO=false;
+function moKhoa(moi){
+  DA_MO=true; const k=$('#khoaKin'); k.classList.remove('kin'); $('#mo-khoa').hidden=true; $('#heroKhoa').textContent='';
+  if(moi){ kho.ghi('mau_bds.mo',{luc:new Date().toISOString()}); baoToast('Đã mở toàn bộ trang. Cảm ơn bạn.'); suKien('mo_khoa',{noi:'mau-bds'}); }
+}
+function khoiTaoCong(){
+  if(XEM_THU){ $('#khoaKin').classList.remove('kin'); $('#heroKhoa').textContent='Bản xem trên claude.ai: trang mở sẵn. Trên trang thật, năm mục cuối chỉ mở sau khi khách để lại thông tin liên hệ.'; $('#cgBao').textContent='Bản xem thử: biểu mẫu này không gửi đi. Trên trang thật, thông tin lưu vào Sổ nhận của Bệnh viện.'; }
+  else if(kho.lay('mau_bds.mo')) moKhoa(false);
+  else suKien('vao_trang',{noi:'mau-bds'});
+  // đang khoá: bấm vào mục bị khoá thì đưa về biểu mẫu
+  $('.top nav').addEventListener('click',e=>{ const a=e.target.closest('a[href^="#"]'); if(!a||DA_MO||XEM_THU) return; const id=a.getAttribute('href').slice(1); if(KHOA.includes(id)){ e.preventDefault(); $('#mo-khoa').scrollIntoView({behavior:'smooth',block:'start'}); } });
+  $('#fCong').addEventListener('submit',e=>{
+    e.preventDefault(); const bao=$('#cgBao'); bao.className='small';
+    const ten=$('#cgTen').value.trim(), dn=$('#cgDn').value.trim(), email=$('#cgEmail').value.trim(), dt=$('#cgDt').value.trim();
+    const loi=m=>{ bao.textContent=m; bao.classList.add('loi'); };
+    if(ten.length<2){ loi('Điền họ tên.'); $('#cgTen').focus(); return; }
+    if(dn.length<2){ loi('Điền tên doanh nghiệp hoặc tổ chức.'); $('#cgDn').focus(); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ loi('Thư điện tử chưa đúng dạng.'); $('#cgEmail').focus(); return; }
+    if(!$('#cgDongY').checked){ loi('Cần đồng ý lưu thông tin liên hệ để mở trang.'); $('#cgDongY').focus(); return; }
+    if(XEM_THU){ bao.textContent='Bản xem thử: không gửi đi. Trên trang thật, thông tin sẽ vào Sổ nhận và trang mở ra.'; bao.classList.add('ok'); return; }
+    if($('#cgWeb').value){ moKhoa(true); return; }   // bẫy máy tự điền: mở trang nhưng không ghi sổ
+    const tt=$('#cgTiepThi').checked, luc=new Date().toISOString();
+    const chu='Đồng ý để Bệnh viện Doanh nghiệp lưu thông tin liên hệ trong sổ nhận để gửi bản xem mẫu và trao đổi về gói dữ liệu'+(tt?' | Nhận thư khi có bản cập nhật số liệu hoặc gói ngành mới':'');
+    const du={noi:'mau-bds',dn,ten,vai:$('#cgVai').value,lac:email+(dt?' · '+dt:''),quy_mo:'',quan_tam:'Gói ngành '+$('#cgNganh').value+' (mở bản mẫu bảng điều khiển Bất động sản)',nhu_cau:$('#cgNhuCau').value.trim(),ghi_chu:'',kem:{},
+      dong_y:{luc,cs:CS_PHIEN,tiep_thi:tt?1:0,so_lieu:0,chu}};
+    $('#cgGui').disabled=true; bao.textContent='Đang gửi…';
+    guiSo('dau_moi',du).then(ok=>{ $('#cgGui').disabled=false; if(ok){ bao.textContent='Đã ghi nhận. Trang đã mở.'; bao.classList.add('ok'); moKhoa(true); } else loi('Chưa gửi được, kiểm tra mạng rồi bấm lại. Hoặc nhắn Zalo 0934 453 555.'); });
+  });
+}
+
+/* ---- khởi tạo ---- */
+function khoiTao(){
+  khoiTaoCong();
+  const selNam=$('#pvNam'); selNam.innerHTML=NAM.slice().reverse().map(y=>`<option value="${y}">${y}</option>`).join('')+'<option value="gop">Gộp 2023–2025</option>'; selNam.value='2025';
+  $('#xhCs').innerHTML=CS_KEYS.map(k=>`<option value="${k}">${esc(CS[k].ten)}</option>`).join('');
+  $('#xhNam').innerHTML=NAM.slice().reverse().map(y=>`<option value="${y}">${y}</option>`).join('');
+  $('#nganhKhac').innerHTML=['Bán lẻ','Công nghệ thông tin, viễn thông','Dầu khí','Điện, nước, khí đốt','Du lịch và giải trí','Hàng cá nhân và gia dụng','Hàng và dịch vụ công nghiệp','Hoá chất','Ô tô và phụ tùng','Tài nguyên cơ bản','Thực phẩm và đồ uống','Truyền thông','Xây dựng và vật liệu','Y tế'].map(t=>`<span class="chip xam">${t}</span>`).join('');
+  veDaiSo(); tinhViTri(); veXepHang(); veSoSanh();
+  selNam.addEventListener('change',e=>{S.sc=e.target.value;tinhViTri();});
+  $('#pvQm').addEventListener('change',e=>{S.qmChon=e.target.value;tinhViTri();});
+  ['#inDt','#inCp','#inTcp','#inLntt','#inLd'].forEach(id=>$(id).addEventListener('input',tinhViTri));
+  ['#khDt','#khLd'].forEach(id=>$(id).addEventListener('input',e=>{e.target.dataset.tay='1';veQuyLuong();}));
+  $('#chonCs').addEventListener('click',e=>{const b=e.target.closest('button[data-cs]');if(!b)return;S.cs=b.dataset.cs;veXuHuong();});
+  $('#xhCs').addEventListener('change',e=>{S.xhCs=e.target.value;veXepHang();});
+  $('#xhNam').addEventListener('change',e=>{S.xhNam=e.target.value;veXepHang();veSoSanh();});
+  $('#xhTim').addEventListener('input',veXepHang);
+  $('#bangXh').addEventListener('change',e=>{const cb=e.target.closest('input[data-ma]');if(!cb)return;const ma=cb.dataset.ma;
+    if(cb.checked){ if(S.ss.length>=5){cb.checked=false;baoToast('Tối đa 5 doanh nghiệp.');return;} S.ss.push(ma);} else S.ss=S.ss.filter(x=>x!==ma);
+    veXepHang();veSoSanh();veXuHuong();});
+  $('#ssChon').addEventListener('click',e=>{const b=e.target.closest('button[data-bo]');if(!b)return;S.ss=S.ss.filter(x=>x!==b.dataset.bo);veXepHang();veSoSanh();veXuHuong();});
+  $('#nutChep').addEventListener('click',()=>chep($('#memo').value,'Đã sao chép đoạn tờ trình.'));
+  $$('button[data-chep]').forEach(b=>b.addEventListener('click',()=>chep(b.dataset.chep,'Đã sao chép.')));
+}
+let toastT; function baoToast(t){ const el=$('#toast'); el.textContent=t; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('on'),1800); }
+function chep(t,bao){ const roi=()=>{ const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');baoToast(bao);}catch(e){baoToast('Chọn và sao chép thủ công.');} document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(()=>baoToast(bao)).catch(roi); else roi(); }
+khoiTao();
+})();
+</script>
+
+</body></html>
