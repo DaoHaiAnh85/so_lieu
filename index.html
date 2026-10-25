@@ -186,6 +186,9 @@ p{margin:0 0 12px}
 .moi a:hover{border-color:var(--accent)}
 .moi a.kham{border-top:5px solid var(--accent)}
 .moi a.mua{border-top:5px solid var(--gold)}
+.mau-goi{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;text-decoration:none;color:var(--ink);border-top:5px solid var(--accent)}
+.mau-goi h3{font-size:19px;margin:4px 0 6px}.mau-goi p{margin:0;color:var(--ink-2);font-size:14.5px;max-width:64ch}.mau-goi:hover h3{color:var(--accent)}
+.bang td.ten-dn .chip{vertical-align:middle;font-size:11.5px;padding:3px 8px;text-decoration:none}
 .moi h3{font-size:18px}
 .moi p{margin:0;font-size:14.5px;color:var(--ink-2)}
 .moi .di{margin-top:auto;padding-top:6px;font-weight:700;color:var(--accent);font-size:14.5px}
@@ -425,7 +428,7 @@ function trangDau(nam){
   var ds = Object.keys(nh).filter(function(k){ return nh[k] >= D.toi_thieu; }).sort(function(a, b){ return nh[b] - nh[a]; });
   var cot = ['TL_NS_DOANH_THU', 'TN_BQ_THANG', 'DT_BQ_NGUOI', 'LNTT_TREN_NS'];
   var dong = ds.map(function(k){ var p = k.split('|');
-    return '<tr class="dong-lk" tabindex="0" data-href="#/nganh/' + encodeURIComponent(k) + '/' + nam + '"><td class="ten-dn"><a href="#/nganh/' + encodeURIComponent(k) + '/' + nam + '">' + esc(tenNganh(p[0], p[1])) + '</a></td><td>' + nh[k] + '</td>' +
+    return '<tr class="dong-lk" tabindex="0" data-href="#/nganh/' + encodeURIComponent(k) + '/' + nam + '"><td class="ten-dn"><a href="#/nganh/' + encodeURIComponent(k) + '/' + nam + '">' + esc(tenNganh(p[0], p[1])) + '</a>' + (p[0] === 'Bất động sản' && p[1] === 'DN' ? ' <a class="chip vang" href="mau/bat-dong-san/?utm_source=so-lieu&amp;utm_campaign=bang-nganh" title="Bản mẫu bảng điều khiển dựng từ gói ngành Bất động sản">Xem thử gói ngành</a>' : '') + '</td><td>' + nh[k] + '</td>' +
       cot.map(function(c){ var x = tv(k, nam, c); return '<td' + (x ? '' : ' class="trong"') + '>' + (x ? dd(x.v, CS[c].k) : '—') + '</td>'; }).join('') + '</tr>'; }).join('');
   var goi = ['VNM', 'FPT', 'MWG', 'VCB', 'HPG', 'GVR', 'SSI', 'PNJ', 'REE', 'HVN'].filter(function(m){ return DN[m]; });
   ve('<section class="hero"><div class="wrap"><span class="eyebrow">Số liệu niêm yết 2020–2025</span>' +
@@ -438,6 +441,7 @@ function trangDau(nam){
     '<section class="sec"><div class="wrap"><div class="dau"><div><h2>Trung vị theo ngành, năm ' + nam + '</h2><p>Trung vị: một nửa số doanh nghiệp trong ngành cao hơn, một nửa thấp hơn. Bấm vào ngành để xem từng doanh nghiệp.</p></div>' + chonNam(function(n){ return '#/trang-dau/' + n; }, nam) + '</div>' +
     '<div class="khung-bang cuon"><table class="bang"><thead><tr><th>Ngành</th><th>Số doanh nghiệp</th>' + cot.map(function(c){ return '<th>' + esc(CS[c].ten) + '<small>' + esc(CS[c].ngan || CS[c].dv) + '</small></th>'; }).join('') + '</tr></thead><tbody>' + dong + '</tbody></table></div>' +
     '<p class="tiny muted" style="margin-top:8px">"—": ngành có dưới ' + D.toi_thieu + ' doanh nghiệp có số cho chỉ số này. Ngành có dưới ' + D.toi_thieu + ' doanh nghiệp không hiện trong bảng. Thu nhập bình quân là chi phí nhân sự chia lao động bình quân, gồm cả bảo hiểm và phúc lợi.</p></div></section>' +
+    '<section class="sec"><div class="wrap"><a class="card mau-goi" href="mau/bat-dong-san/?utm_source=so-lieu&amp;utm_campaign=trang-dau"><div><span class="eyebrow">Xem thử một gói ngành</span><h3>Bảng điều khiển ngành Bất động sản</h3><p>Nhập 5 số của công ty bạn, xem vị trí so với 79 doanh nghiệp bất động sản niêm yết, thang chuẩn P10–P90, xếp hạng, xu hướng 2020–2025 và kịch bản quỹ lương năm tới. Dựng từ đúng một tệp trong bộ dữ liệu.</p></div><span class="btn p">Mở bản mẫu</span></a></div></section>' +
     moiKham('trang-dau'), '');
   ganTim('timDau', function(m){ location.hash = '#/dn/' + m; });
   document.querySelectorAll('tr.dong-lk').forEach(function(tr){ tr.addEventListener('click', function(e){ if (!e.target.closest('a')) location.hash = tr.dataset.href; });
