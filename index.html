@@ -236,6 +236,7 @@ p{margin:0 0 12px}
 <script>
 'use strict';
 var D = null, DN = {}, TV = {}, COT = [], IDX = {};
+var G6 = null, G6I = {};   /* số 6 tháng (báo cáo giữa niên độ), tải sau tệp số năm */
 var NAM = [2020, 2021, 2022, 2023, 2024, 2025];
 var KHAM = 'https://daohaianh85.github.io/kham/?utm_source=so-lieu&utm_campaign=';
 var ZALO = '0934 453 555', THU = 'daohaianh85@gmail.com';
@@ -436,6 +437,7 @@ function trangDau(nam){
     '<p class="lede">Lao động, thu nhập bình quân, chi phí nhân sự trên doanh thu và năng suất từng người, đọc từ báo cáo tài chính đã kiểm toán. Tra một mã để xem doanh nghiệp so với trung vị ngành.</p>' +
     oTim('timDau', 'Gõ mã hoặc tên, ví dụ VNM hoặc Thế Giới Di Động') +
     '<div class="goi-y">Hay được tra: ' + goi.map(function(m){ return '<a href="#/dn/' + m + '">' + m + '</a>'; }).join('') + '</div>' +
+    (G6 ? '<p class="goi-y" style="margin-top:6px"><span class="chip vang">Mới</span> Số ' + esc(G6.ten) + ' (báo cáo bán niên đã soát xét) của ' + so(Object.keys(G6.dn).length) + ' doanh nghiệp, xem trong hồ sơ từng doanh nghiệp.</p>' : '') +
     '<div class="dai-so"><div><b>' + so(t.so_dn) + '</b><span>doanh nghiệp trên HOSE và HNX</span></div><div><b>' + so(t.so_bc) + '</b><span>báo cáo năm, 2020–2025</span></div><div><b>' + t.so_nganh + '</b><span>nhóm ngành</span></div><div><b>' + pt(t.pdf / t.so_o) + '</b><span>con số đọc trực tiếp từ PDF báo cáo</span></div></div>' +
     '</div></section>' +
     '<section class="sec"><div class="wrap"><div class="dau"><div><h2>Trung vị theo ngành, năm ' + nam + '</h2><p>Trung vị: một nửa số doanh nghiệp trong ngành cao hơn, một nửa thấp hơn. Bấm vào ngành để xem từng doanh nghiệp.</p></div>' + chonNam(function(n){ return '#/trang-dau/' + n; }, nam) + '</div>' +
@@ -492,7 +494,7 @@ function trangDN(ma, nam){
   var chonCs = '<div class="chon-cs" role="group" aria-label="Chọn chỉ số">' + DIEN_BIEN.map(function(c){ return '<button type="button" data-cs="' + c + '" aria-pressed="' + (c === CS_DB) + '">' + esc(CS[c].ngan ? CS[c].ten : CS[c].ten) + '</button>'; }).join('') + '</div>';
   ve('<section><div class="wrap"><div class="ho-so"><div><div class="ma">' + d.ma + '</div><h1>' + esc(d.ten) + '</h1><p class="day-du">' + esc(d.ten_day_du) + '</p><div class="hang">' + chip.join('') + '</div></div>' +
     chonNam(function(n){ return '#/dn/' + d.ma + '/' + n; }, nam, co) + '</div>' +
-    '<div class="sinh-hieu" aria-label="Sinh hiệu nhân sự năm ' + nam + '">' + sh + '</div></div></section>' +
+    '<div class="sinh-hieu" aria-label="Sinh hiệu nhân sự năm ' + nam + '">' + sh + '</div></div></section>' + khoi6T(d) +
     '<section class="sec"><div class="wrap"><div class="dau"><div><h2>So với trung vị ngành năm ' + nam + '</h2><p>Ngành ' + esc(tn.toLowerCase()) + (nTv ? ', trung vị tính trên tối đa ' + nTv + ' doanh nghiệp có số' : '') + '. Vạch vàng là trung vị, chấm xanh là ' + d.ma + '.</p></div>' +
     '<div class="hang"><a class="btn g sm" href="#/nganh/' + encodeURIComponent(k) + '/' + nam + '">Xem cả ngành</a><a class="btn g sm" href="#/so-sanh/' + d.ma + '/' + nam + '">So sánh với doanh nghiệp khác</a></div></div>' +
     '<div class="khung-bang cuon"><table class="bang so-tv"><thead><tr><th>Chỉ số</th><th>' + d.ma + '</th><th>Trung vị ngành</th><th>So với trung vị</th></tr></thead><tbody>' + dongTv + '</tbody></table></div>' +
@@ -511,6 +513,31 @@ function trangDN(ma, nam){
   }
   document.querySelectorAll('.chon-cs button').forEach(function(b){ b.addEventListener('click', function(){ CS_DB = b.dataset.cs; veDB(); }); });
   veDB();
+}
+
+/* ---------- số giữa niên độ (6 tháng 2026) ---------- */
+function g6(r, c){ return r.so[G6I[c]]; }
+function doiPt(v, v0){ if (trong(v) || trong(v0) || v0 <= 0) return '<span class="muted">—</span>'; var r = v / v0 - 1; return '<span class="lech">' + (r > 0.0005 ? '▲ ' : r < -0.0005 ? '▼ ' : '■ ') + pt(Math.abs(r)) + '</span>'; }
+function khoi6T(d){
+  if (!G6) return '';
+  var r = G6.dn[d.ma], k = khoaNganh(d), m = G6.trung_vi[k] || {};
+  if (!r) return '';
+  function tvG(c, kieu){ var x = m[c]; return x ? (kieu === 'tang' ? (x[0] > 0.0005 ? '▲ ' : x[0] < -0.0005 ? '▼ ' : '■ ') + pt(Math.abs(x[0])) : dd(x[0], kieu)) + '<small class="muted" style="display:block;font-size:11.5px">' + x[1] + ' doanh nghiệp</small>' : '<span class="muted">—</span>'; }
+  var dong = [
+    [esc(tenDT(d)), 'tỷ đồng', ty(g6(r, 'DT')), ty(g6(r, 'DT0')), doiPt(g6(r, 'DT'), g6(r, 'DT0')), tvG('TANG_DT', 'tang')],
+    ['Lợi nhuận trước thuế', 'tỷ đồng', ty(g6(r, 'LNTT')), ty(g6(r, 'LNTT0')), doiPt(g6(r, 'LNTT'), g6(r, 'LNTT0')), tvG('TANG_LNTT', 'tang')],
+    ['Chi phí nhân sự', 'tỷ đồng', ty(g6(r, 'NS')), ty(g6(r, 'NS0')), doiPt(g6(r, 'NS'), g6(r, 'NS0')), tvG('TANG_NS', 'tang')],
+    ['Chi phí nhân sự / doanh thu', '%', pt(g6(r, 'TL')), pt(g6(r, 'TL0')), (trong(g6(r, 'TL')) || trong(g6(r, 'TL0')) ? '<span class="muted">—</span>' : '<span class="lech">' + so((g6(r, 'TL') - g6(r, 'TL0')) * 100, 1) + ' điểm %</span>'), tvG('TL', 'pt')],
+    ['Thu nhập bình quân', 'triệu đồng/người/tháng', so(g6(r, 'TN'), 1), '<span class="muted">—</span>', '<span class="muted">—</span>', tvG('TN', 's1')],
+    ['Số lao động ngày ' + G6.ngay_cuoi_ky, 'người', so(g6(r, 'LD')), '<span class="muted">—</span>', '<span class="muted">—</span>', '<span class="muted">—</span>']
+  ].map(function(x){ return '<tr><td class="cs">' + x[0] + '<small>' + esc(x[1]) + '</small></td><td class="gt-dn">' + x[2] + '</td><td>' + x[3] + '</td><td>' + x[4] + '</td><td>' + x[5] + '</td></tr>'; }).join('');
+  var nm = G6.ky.slice(0, 4), luu = [];
+  luu.push(r.sx ? 'Số từ báo cáo tài chính giữa niên độ ' + (r.loai === 'HN' ? 'hợp nhất' : 'riêng') + ' đã soát xét.' : 'Doanh nghiệp chưa có báo cáo bán niên đã soát xét; số lấy từ báo cáo quý II (chưa soát xét).');
+  luu.push('Số ' + G6.so_thang + ' tháng có mùa vụ: chỉ so với cùng kỳ năm trước, không so với số cả năm. "Cùng kỳ ' + (nm - 1) + '" là cột so sánh in trong chính báo cáo năm ' + nm + '.');
+  if (trong(g6(r, 'NS'))) luu.push(d.mau === 'CTCK' ? 'Chưa đưa chi phí nhân sự kỳ 6 tháng của công ty chứng khoán: các báo cáo giữa niên độ trình bày chi phí nhân viên rải ở nhiều thuyết minh, chưa cộng được đồng nhất.' : 'Chưa đưa chi phí nhân sự: báo cáo giữa niên độ không có bảng chi phí theo yếu tố đủ để tính, hoặc chỉ có nhân viên bán hàng và quản lý, hoặc số cần soát lại.');
+  return '<section class="sec"><div class="wrap"><div class="dau"><div><span class="eyebrow">Mới · ' + esc(G6.ten) + '</span><h2>' + esc(G6.ten.charAt(0).toUpperCase() + G6.ten.slice(1)) + ' so với cùng kỳ</h2><p>Thu nhập bình quân tính trên ' + G6.so_thang + ' tháng, quy về mỗi tháng. Cột cuối là trung vị ngành ' + esc(tenNganh(d.nganh, d.mau).toLowerCase()) + ' trong cùng kỳ (mức thay đổi hoặc mức tỷ lệ).</p></div></div>' +
+    '<div class="khung-bang cuon"><table class="bang so-tv"><thead><tr><th>Chỉ số</th><th>' + G6.so_thang + ' tháng ' + nm + '</th><th>Cùng kỳ ' + (nm - 1) + '</th><th>Thay đổi</th><th>Trung vị ngành</th></tr></thead><tbody>' + dong + '</tbody></table></div>' +
+    '<ul class="luu-y" style="margin-top:14px">' + luu.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div></section>';
 }
 
 /* ---------- theo ngành ---------- */
@@ -604,6 +631,7 @@ function trangCachTinh(){
     '<div><b>Doanh thu</b><p>Doanh nghiệp: doanh thu thuần. Ngân hàng: tổng thu nhập hoạt động. Chứng khoán: cộng doanh thu hoạt động.</p></div>' +
     '<div><b>Lao động bình quân</b><p>Số bình quân doanh nghiệp công bố; không có thì lấy trung bình đầu năm và cuối năm. Báo cáo chỉ công bố số của công ty mẹ thì không dùng cho chỉ số mỗi người.</p></div>' +
     SO_TV.filter(function(c){ return CS[c].giai; }).map(function(c){ return '<div><b>' + esc(CS[c].ten) + '</b><p>' + esc(CS[c].giai) + '</p></div>'; }).join('') +
+    '<div><b>Số 6 tháng 2026</b><p>Đọc từ báo cáo tài chính bán niên 2026 đã soát xét (không có thì báo cáo quý II, ghi rõ trong hồ sơ). Số "cùng kỳ" là cột so sánh in trong chính báo cáo. Thu nhập bình quân = chi phí nhân sự 6 tháng / lao động bình quân / 6. Chỉ đưa báo cáo khớp các phép cộng của bảng kết quả kinh doanh; bỏ từng chỉ số lệch hẳn so với số cả năm trước. Công ty chứng khoán chưa có chi phí nhân sự kỳ 6 tháng. Doanh nghiệp có năm tài chính không theo năm dương lịch không có số 6 tháng.</p></div>' +
     '<div><b>Trung vị ngành</b><p>Một nửa số doanh nghiệp trong ngành cao hơn, một nửa thấp hơn. Tính trên các doanh nghiệp cùng ngành, cùng mẫu báo cáo (doanh nghiệp, ngân hàng, chứng khoán, bảo hiểm) và cùng năm; chỉ công bố khi có từ ' + D.toi_thieu + ' doanh nghiệp có số. Bỏ các dòng chi phí nhân sự chưa đủ và các thu nhập bình quân nằm ngoài 1% hai đầu.</p></div>' +
     '</div><p class="note vang" style="margin-top:16px">Đây là số liệu tham khảo về nhân sự của doanh nghiệp niêm yết, không phải khuyến nghị đầu tư. Doanh nghiệp niêm yết thường lớn hơn mặt bằng chung; các quan hệ giữa chỉ số là tương quan, không phải nhân quả.</p></div></section>', 'Cách tính');
 }
@@ -629,6 +657,8 @@ fetch('du-lieu/niem-yet.json').then(function(r){ if (!r.ok) throw new Error(r.st
   D.dn.forEach(function(d){ DN[d.ma] = d; d._tim = khongDau(d.ma + ' ' + d.ten + ' ' + d.ten_day_du); });
   var b = x.ban.split('-'); document.getElementById('banSo').textContent = '(cập nhật ngày ' + b[2] + '/' + b[1] + '/' + b[0] + ')';
   window.addEventListener('hashchange', dinhTuyen); dinhTuyen();
+  fetch('du-lieu/giua-nien-do.json').then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }).then(function(g){
+    G6 = g; g.cot.forEach(function(c, i){ G6I[c] = i; }); dinhTuyen(); }).catch(function(){});
 }).catch(function(){ document.getElementById('app').innerHTML = '<div class="cho">Chưa tải được tệp số liệu. Tải lại trang (F5); nếu vẫn lỗi, báo Bệnh viện qua Zalo ' + ZALO + '.</div>'; });
 </script>
 </body>
